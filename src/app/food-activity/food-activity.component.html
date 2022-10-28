@@ -1,0 +1,296 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <link rel="icon" href="assets/img/favicon.ico" type="image/x-icon">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Calorie Tracker Coding Assignment - User Data Details</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
+    <link href="/assets/css/global.css" rel="stylesheet">
+</head>
+
+<body>
+    <div>
+        <header class="header">
+            <div class="container">
+                <div class="logo">
+                    <a href="#">
+                        <img src="assets/img/logo.png">
+                    </a>
+                </div>
+            </div>
+        </header>
+        <div class="col-md-11 text-center">
+          <h1 class="title">{{displayUserInfo.userName}}</h1></div>
+        <div class="mid-container">
+            <div class="container">
+                <div class="title-row">
+                    <div class="title-row-left">
+                        <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addDataModal">Add Food Data</button>
+                    </div>
+                    <div class="title-row-right">
+                      <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addActivityDataModal">Add Activity Data</button>
+                  </div>
+                </div>
+                <div>
+                  <form [formGroup]="getDateFormValueForm" (ngSubmit)="getDatabaseonDate()">
+                    <div class="view-calorie-data-date-input">
+                      <div class="date-input">
+                      <input type="date" placeholder="dd-mm-yyyy" value="3/10/1990" formControlName="getDate" />
+                    </div>
+                    </div>
+                  <button class="btn-primary">Submit</button><br>
+                  </form>
+                </div>
+                <div class="view-calorie-data">
+                    <div class="view-calorie-data-chart">
+                        <div class="food-data white-card">
+                            <h2>Food Data</h2>
+                            <div class="food-data-table">
+                                <table
+                                    class="dcf-table dcf-table-responsive dcf-table-bordered dcf-table-striped dcf-w-100%">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col" class="date">Date</th>
+                                            <th scope="col" class="userName">Name</th>
+                                            <th scope="col" class="foodName">Food Name</th>
+                                            <th scope="col" class="foodGroup">Food Group</th>
+                                            <th scope="col" class="servingDescription">Serving</th>
+                                            <th scope="col" class="caloriesIn">Calorie In</th>
+                                            <th scope="col" class="mealType">Meal Type</th>
+                                            <!-- <th scope="col">Action</th> -->
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr *ngFor="let foodData of userFoodDataValues">
+                                            <td data-label="Date">{{foodData.date}}</td>
+                                            <td data-label="Name">{{foodData.userName}}</td>
+                                            <td data-label="Food Name">{{foodData.foodName}}</td>
+                                            <td data-label="Food Group">{{foodData.foodGroup}}</td>
+                                            <td data-label="Serving">{{foodData.servingDescription}}</td>
+                                            <td data-label="Calorie In">{{foodData.caloriesIn}}</td>
+                                            <td data-label="Meal Type">{{foodData.mealType}}</td>
+                                            <!-- <td data-label="Action">
+                                              <div class="btn-set">
+                                                <a class="btn-secondary">View</a>
+                                              </div>
+                                            </td> -->
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="activity-data white-card">
+                            <h2>Activity Data</h2>
+                            <div class="activity-data-table">
+                                <table
+                                    class="dcf-table dcf-table-responsive dcf-table-bordered dcf-table-striped dcf-w-100%">
+                                    <thead>
+                                        <tr>
+
+                                            <th scope="col">Date</th>
+                                            <th scope="col">Name</th>
+                                            <th scope="col"> Activity Name</th>
+                                            <th scope="col">Specific Motion</th>
+                                            <th scope="col">Calorie Out</th>
+                                            <th scope="col">MET Value</th>
+                                            <th scope="col">Duration</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr *ngFor="let activityData of userActivityDataValue">
+                                            <td data-label="Date">{{activityData.date}}</td>
+                                            <td data-label="Name">{{activityData.userName}}</td>
+                                            <td data-label="Activity Name">{{activityData.activityName}}</td>
+                                            <td data-label="Specific Motion">{{activityData.specificMotion}}</td>
+                                            <td data-label="Calorie Out">{{activityData.calorieOut}}</td>
+                                            <td data-label="MET Value">{{activityData.metValue}}</td>
+                                            <td data-label="Duration">{{activityData.activityDuration}}</td>
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div><br>
+                        <div class="net-calorie-data white-card">
+                          <div class="title-row-right">
+                            <button class="btn btn-primary" data-bs-toggle="modal" (click)="userNetCalorie()"> Calculate Net Calorie</button>
+                          </div>
+                            <div class="net-calorie-table">
+                                <div class="net-calorie-row" >
+                                    <strong>BMR: </strong>
+                                    <span>{{displayUserInfo.userBmr}}</span>
+                                </div>
+
+                                <div class="net-calorie-row">
+                                    <strong>Calorie In: </strong>
+                                    <span>{{calorieInValue}}</span>
+                                </div>
+                                <div class="net-calorie-row">
+                                    <strong>Calorie Out: </strong>
+                                    <span>{{calorieOutValue}}</span>
+                                </div>
+                                <div class="net-calorie-row net-calorie-totl">
+                                    <strong >Net Calorie:</strong>
+                                    <span>{{netCalorie}}</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <footer class="footer">
+            <div class="container">
+                <p>2022 LMD Consulting, LLC , All Rights Reserved</p>
+            </div>
+        </footer>
+    </div>
+      <!-- Food Modal Box Start -->
+      <div class="modal fade" id="addDataModal" tabindex="-1" aria-labelledby="addDataModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content add-data-modal">
+                <div class="modal-header">
+                    <ul class="nav nav-tabs" id="myTab" role="tablist">
+                        <li class="nav-item" role="presentation">
+                            <a class="nav-link active" id="food-tab" data-toggle="tab" href="#food" role="tab"
+                                aria-controls="food" aria-selected="true">Add Food</a>
+                        </li>
+                    </ul>
+
+                </div>
+                <div class="modal-body">
+                    <div class="tab-content" id="myTabContent">
+                        <div class="tab-pane fade show active" id="food" role="tabpanel" aria-labelledby="food-tab" >
+                          <form [formGroup]="foodCollectionForm">
+                            <div class="input-field">
+                              <label>Select Date</label>
+                              <input type="date" value="06/24/2022" placeholder="" formControlName="date">
+                          </div>
+                            <div class="input-field">
+                              <label>Select Food Group</label>
+                              <select class="selectbox" formControlName="foodGroup"(change)="baseOnselectFoodGroupDataList($event)">
+                                <option value="">--Select--</option>
+                                <option *ngFor="let foodGroupListValue of sortedFoodGroupList" value="{{foodGroupListValue}}">{{foodGroupListValue}}</option>
+                              </select>
+                              <small *ngIf="foodCollectionForm.controls['foodGroup'].invalid && (foodCollectionForm.controls['foodGroup'].dirty || foodCollectionForm.controls['foodGroup'].touched || submitted)" style="color:red;">
+                                {{formFoodValidation(foodCollectionForm.controls['foodGroup'].errors ," Food Group")}}
+                              </small>
+                          </div>
+                            <div class="input-field">
+                                <label>Select Food Name</label>
+                                <select class="selectbox" formControlName="foodName" (change)="baseOnselectFoodNameDataList($event)">
+                                    <option value="">--Select--</option>
+                                    <option *ngFor="let foodNameValue of sortedFoodNameList" value="{{foodNameValue}}">{{foodNameValue}}</option>
+                                </select>
+                                <small *ngIf="foodCollectionForm.controls['foodName'].invalid && (foodCollectionForm.controls['foodName'].dirty || foodCollectionForm.controls['foodName'].touched || submitted)" style="color:red;">
+                                  {{formFoodValidation(foodCollectionForm.controls['foodName'].errors ," Food Name")}}
+                                </small>
+                            </div>
+                            <div class="input-field">
+                                <label>Select Meal Type</label>
+                                <select class="selectbox" formControlName="mealType">
+                                   <option value="">--Select--</option>
+                                    <option>Breakfast</option>
+                                    <option>Lunch</option>
+                                    <option>Dinner</option>
+                                </select>
+                                <small *ngIf="foodCollectionForm.controls['mealType'].invalid && (foodCollectionForm.controls['mealType'].dirty || foodCollectionForm.controls['mealType'].touched || submitted)" style="color:red;">
+                                  {{formFoodValidation(foodCollectionForm.controls['mealType'].errors ,"Meal Type")}}
+                                </small>
+                            </div>
+                            <div class="input-field">
+                                <label>Serving</label>
+                                <input type="number" placeholder="Serving" formControlName="servingDescription"/>
+                                <small *ngIf="foodCollectionForm.controls['servingDescription'].invalid && (foodCollectionForm.controls['servingDescription'].dirty || foodCollectionForm.controls['servingDescription'].touched || submitted)" style="color:red;">
+                                  {{formFoodValidation(foodCollectionForm.controls['servingDescription'].errors ," Serving ")}}
+                                </small>
+                            </div>
+                            <div class="input-field input-field-btn btn-set--center">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                                <button type="button" class="btn btn-primary" (click)="userFoodData()">Save</button>
+                            </div>
+                          </form>
+                        </div>
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </div>
+    <!-- Food Modal Box End -->
+          <!-- Activity Box Start -->
+          <div class="modal fade" id="addActivityDataModal" tabindex="-1" aria-labelledby="addDataModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content add-data-modal">
+                    <div class="modal-header">
+                        <ul class="nav nav-tabs" id="myTab" role="tablist">
+                            <li class="nav-item" role="presentation">
+                                <a class="nav-link active" id="activity-tab" data-toggle="tab" href="#activity" role="tab"
+                                    aria-controls="activity" aria-selected="true">Add Activity</a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="modal-body">
+                        <div class="tab-content" id="myTabContent">
+                            <div class="tab-pane show active" id="activity" role="tabpanel" aria-labelledby="activity-tab">
+                              <form [formGroup]="activityCollectionForm">
+                                <div class="input-field">
+                                  <label>Select Date</label>
+                                  <input type="date" value="06/24/2022" placeholder="" formControlName="date">
+                              </div>
+                                <div class="input-field">
+                                    <label>Activity Name</label>
+                                    <select class="selectbox" formControlName="activityName" (change)="baseOnSelectActivityNameList($event)">
+                                      <option value="">--Select--</option>
+                                      <option *ngFor="let activityNameValue of sortedActivityNameList" value="{{activityNameValue}}">{{activityNameValue}}</option>
+                                    </select>
+                                    <small *ngIf="activityCollectionForm.controls['activityName'].invalid && (activityCollectionForm.controls['activityName'].dirty || activityCollectionForm.controls['activityName'].touched || submitted)" style="color:red;">
+                                      {{formActivityValidation(activityCollectionForm.controls['activityName'].errors ,"Activity Name")}}
+                                    </small>
+                                </div>
+                                <div class="input-field">
+                                    <label>Activity Description</label>
+                                    <select class="selectbox" formControlName="specificMotion" (change)="baseOnMotionGetMetValue($event)">
+                                      <option value="">--Select--</option>
+                                      <option *ngFor="let activityMotionValue of sortedSpecificMotionList" value="{{activityMotionValue}}">{{activityMotionValue}}</option>
+                                    </select>
+                                    <small *ngIf="activityCollectionForm.controls['specificMotion'].invalid && (activityCollectionForm.controls['specificMotion'].dirty || activityCollectionForm.controls['specificMotion'].touched || submitted)" style="color:red;">
+                                      {{formActivityValidation(activityCollectionForm.controls['specificMotion'].errors ,"Activity Description")}}
+                                    </small>
+                                </div>
+                                <div class="input-field">
+                                    <label>MET Value</label>
+                                    <input type="number" placeholder="Value" formControlName="metValue" ngModel="{{getMetValueBaseOnMotion}}">
+                                </div>
+                                <div class="input-field">
+                                    <label>Activity Duration</label>
+                                    <input type="number" value="06/24/2022" placeholder="Enter Duration in minutes" formControlName="activityDuration">
+                                    <small *ngIf="activityCollectionForm.controls['activityDuration'].invalid && (activityCollectionForm.controls['activityDuration'].dirty || activityCollectionForm.controls['activityDuration'].touched || submitted)" style="color:red;">
+                                      {{formActivityValidation(activityCollectionForm.controls['activityDuration'].errors ,"Activity Duration")}}
+                                    </small>
+                                </div>
+                                <div class="input-field input-field-btn btn-set--center">
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                                    <button type="button" class="btn btn-primary" (click)="activityCollectionFun()">Save</button>
+                                  </div>
+                                </form>
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+          </div>
+        <!-- Activity Modal Box End -->
+</body>
+
+<script src="assets/js/jslim.js"></script>
+<script src="assets/js/popper.min.js"></script>
+<script src="assets/js/bootstrap.min.js"></script>
+<script src="assets/js/custom.js"></script>
+
+</html>

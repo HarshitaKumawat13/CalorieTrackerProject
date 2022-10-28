@@ -1,0 +1,89 @@
+
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <link rel="icon" href="/assets/img/favicon.ico" type="image/x-icon">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Calorie Tracker Coding Assignment - User List</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="/assets/css/global.css" rel="stylesheet">
+</head>
+
+<body>
+    <div>
+        <header class="header">
+            <div class="container">
+                <div class="logo">
+                    <a href="#">
+                        <img src="assets/img/logo.png">
+                    </a>
+                </div>
+            </div>
+        </header>
+        <div class="mid-container">
+            <div class="container">
+                <div class="title-row">
+                    <h1 class="title">User List</h1>
+                    <div class="title-row-right">
+                      <button class="btn btn-primary" (click)="gotoUserRegistrationForm()">New User</button>
+                  </div>
+                </div>
+                <div class="user-list">
+                    <table class="dcf-table dcf-table-responsive dcf-table-bordered dcf-table-striped dcf-w-100%">
+                        <thead>
+                            <tr>
+                                <!-- <th scope="col" class="id">ID</th> -->
+                                <th scope="col" class="userName">Name</th>
+                                <th scope="col" class="userWeight">Weight</th>
+                                <th scope="col" class="userHeight">Height</th>
+                                <th scope="col" class="userAge">Age</th>
+                                <th scope="col" class="userGender">Gender</th>
+                                <th scope="col" class="userBmr">BMR</th>
+                                <th scope="col" class="action">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let userData of userForm,let ind = index">
+                                <!-- <th scope="row">{{userData._id}}</th> -->
+                                <td data-label="Name">{{userData.userName}}</td>
+                                <td data-label="Weight">{{userData.userWeight}}</td>
+                                <td data-label="Height">{{userData.userHeight}}</td>
+                                <td data-label="Age">{{userData.userAge}}</td>
+                                <td data-label="Gender">{{userData.userGender}}</td>
+                                <th data-label="BMR">{{userData.userBmr}}</th>
+                                <td data-label="Action">
+                                    <div class="btn-set">
+                                      <!-- <button class="btn btn-primary" (click)="updateUserDataById(ind)">Edit</button> -->
+                                      <!-- <button class="btn btn-primary" (click)="viewUserAllData(ind)">View</button> -->
+                                      <button class="btn btn-primary" (click)="deleteUserDataById(userData._id)">Delete</button>
+                                      <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addDataModal" (click)="addUserFoodAndActivityDetails(ind)">View Data</button>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <footer class="footer">
+            <div class="container">
+                <p>2022 LMD Consulting, LLC , All Rights Reserved</p>
+            </div>
+        </footer>
+    </div>
+
+
+  </body>
+<script src="assets/js/jslim.js"></script>
+<script src="assets/js/popper.min.js"></script>
+<script src="assets/js/bootstrap.min.js"></script>
+<script src="assets/js/custom.js"></script>
+
+</html>
